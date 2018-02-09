@@ -100,4 +100,75 @@ foo = function() {
 
   */
 });
-describe('Function hositing occur before variable hosting', () => {});
+describe('Function hositing occur before variable hosting', () => {
+  it('code', () => {
+    expect(foo()).toBe(1); // 1
+
+    var foo;
+
+    function foo() {
+      return 1;
+    }
+
+    foo = function() {
+      return 2;
+    };
+    expect(foo()).toBe(2);
+  });
+  it('reality', () => {
+    //variable & expression declare first
+    function foo() {
+      return 1;
+    }
+    //scope tell compiler foo already existed,so compiler will not do any thing
+    var foo;
+    expect(foo()).toBe(1); // 1
+
+    foo = function() {
+      return 2;
+    };
+    expect(foo()).toBe(2);
+  });
+});
+describe('Function with expression can override hositing', () => {
+  it('code', () => {
+    expect(foo()).toBe(3); // 3
+
+    function foo() {
+      return 1;
+    }
+
+    var foo = function() {
+      return 2;
+    };
+    expect(foo()).toBe(2);
+    function foo() {
+      return 3;
+    }
+  });
+});
+describe('avoid declare function in blocks', () => {
+  //however it is not reliable,not support in node js
+  /*
+  foo(); // "b"
+
+  var a = true;
+  if (a) {
+    function foo() {
+      console.log('a');
+    }
+  } else {
+    function foo() {
+      console.log('b');
+    }
+  }
+  */
+});
+
+/* Review
+
+var a and a = 2 as two separate statements, the first one a **compiler-phase** task, and the second one an **execution-phase task**.
+
+
+
+*/
