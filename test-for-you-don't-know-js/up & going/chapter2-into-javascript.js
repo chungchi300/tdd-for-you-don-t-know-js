@@ -380,7 +380,7 @@ describe('Functions As Values', () => {
 
     expect(typeof NIIFE === 'function').toBe(true);
   });
-  it('closure a bility that inner function can continue to access function scope and variable even once the function has finished running', () => {
+  it('closure is ability that inner function can continue to access function variable according to scope(lexical scope it was defined in at author-time.) even once the function has finished running', () => {
     function makeAdder(x) {
       // parameter `x` is an inner variable
 
@@ -404,6 +404,8 @@ describe('Functions As Values', () => {
     expect(twoAdder(2)).toBe(4);
   });
   it('closure application pattern - module pattern', () => {
+    var username = 'dasd';
+    var password = 'ddd';
     function User() {
       var username = '';
       var password = '';
